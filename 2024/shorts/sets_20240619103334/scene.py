@@ -13,19 +13,39 @@ FRAME_HEIGHT = config.frame_height
 FRAME_WIDTH = config.frame_width
 
 
-class SetsOperations(Scene):
-    def setup_it(self, add_border: True):
-        if add_border:
-            border = Rectangle(width=FRAME_WIDTH, height=FRAME_HEIGHT, color=WHITE)
-            self.add(border)
+class CustomScene(Scene):
+    """
+    CustomScene defines a bunch of utilitary functions such as pauses and many others.
+    """
 
+    def small_pause(self, n=0.5) -> None:
+        self.wait(n)
+
+    def pause(self, n=1.5) -> None:
+        self.wait(n)
+
+    def medium_pause(self, n=3) -> None:
+        self.wait(n)
+
+    def long_pause(self, n=5) -> None:
+        self.wait(n)
+
+    def setup_border(self, shows_border=True) -> None:
+        if shows_border:
+            border = Rectangle(width=FRAME_WIDTH, height=FRAME_HEIGHT, color=WHITE)
+            self.play(Create(border))
+
+
+class SetsOperations(CustomScene):
     def setup_title_and_watermark(self, title: str, watermark="@yan.rodriguescs"):
         title = MathTex(title, color=RED).set(width=1.5).to_corner(UP)
+
         watermark = (
             Text(watermark, color="#b2b2b2", font_size=16)
             .next_to(title, DOWN)
             .set(width=0.9)
         )
+
         return VGroup(title, watermark)
 
     def generate_set(self, label_text: str, color: str):
@@ -34,7 +54,7 @@ class SetsOperations(Scene):
         return VGroup(set_circle, set_label)
 
     def construct(self):
-        self.setup_it(add_border=False)
+        self.setup_border(shows_border=False)
 
         setup = self.setup_title_and_watermark(r"Conjuntos")
 
@@ -69,9 +89,9 @@ class SetsOperations(Scene):
             operation = MathTex(operation_text, color=color).next_to(group, 2 * UP)
 
             self.play(LaggedStart(Write(operation)))
-            self.wait(0.5)
+            self.small_pause()
 
             self.play(FadeIn(animation))
             self.play(Unwrite(operation), Unwrite(animation))
 
-            self.wait(0.75)
+            self.small_pause()
