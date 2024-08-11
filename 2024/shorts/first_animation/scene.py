@@ -1,7 +1,24 @@
 # 2024/06/17
 
-from manim import *
-from typing import Dict
+# from manim import *
+from manim import (
+    Scene,
+    Circle,
+    Triangle,
+    RED,
+    BLUE,
+    Transform,
+    Create,
+    GREEN,
+    UL,
+    UR,
+    DR,
+    DL,
+    Square,
+    Line,
+    FadeOut,
+    Dot,
+)
 
 
 class CreateCircle(Scene):
@@ -17,7 +34,7 @@ class CreateCircle(Scene):
         self.play(circle.animate.set_fill(GREEN, opacity=0.5))
         self.play(circle.animate.set_color(GREEN))
 
-        square: Dict[str, Mobject | ManimColor | float] = {
+        square = {
             "mobject": Square(),
             "color": BLUE,
             "opacity": 0.5,
